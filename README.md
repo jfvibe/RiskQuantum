@@ -1,4 +1,4 @@
-# Risk0 - Plataforma de Seguros Paramétricos
+# RiskØ - Plataforma de Seguros Paramétricos
 
 Aplicación Flutter para la gestión inteligente de seguros paramétricos con evaluación de riesgo basada en ubicación y asistente virtual local.
 
