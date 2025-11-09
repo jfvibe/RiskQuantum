@@ -2282,17 +2282,6 @@ class _MisPolizasScreenState extends State<MisPolizasScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Mis Pólizas Activas'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.delete_forever),
-            onPressed: () {
-              setState(() {
-                InsuranceManager().policies.clear();
-              });
-            },
-            tooltip: 'Limpiar todas las pólizas',
-          ),
-        ],
       ),
       body: policies.isEmpty
           ? Center(
@@ -2316,62 +2305,99 @@ class _MisPolizasScreenState extends State<MisPolizasScreen> {
             margin: const EdgeInsets.only(bottom: 16),
             elevation: 2,
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-            child: ListTile(
-              contentPadding: const EdgeInsets.all(16),
-              leading: Container(
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: policy.isParametric ? Colors.green.withOpacity(0.1) : Colors.grey.withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Icon(
-                  policy.isParametric ? Icons.auto_awesome : Icons.handyman,
-                  color: policy.isParametric ? Colors.green : Colors.grey,
-                ),
+            child: Container(
+              decoration: BoxDecoration(
+                color: isDark ? Colors.black.withOpacity(0.2) : Colors.white,
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: isDark ? Colors.grey[700]! : Colors.grey[200]!),
               ),
-              title: Text('${policy.category} - ${policy.type}', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-              subtitle: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(policy.insurer, style: TextStyle(color: Colors.grey[600])),
-                  const SizedBox(height: 4),
-                  Text(
-                    policy.description,
-                    style: TextStyle(fontSize: 12, color: Colors.grey[500]),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ],
-              ),
-              trailing: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text('\$${policy.premium}', style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xFF3B82F6))),
-                  Text('USDC/mes', style: TextStyle(fontSize: 10, color: Colors.grey[500])),
-                ],
-              ),
-              onLongPress: () {
-                showDialog(
-                  context: context,
-                  builder: (context) => AlertDialog(
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-                    title: const Text('Cancelar Póliza'),
-                    content: Text('¿Deseas cancelar la póliza de ${policy.insurer}?'),
-                    actions: [
-                      TextButton(onPressed: () => Navigator.pop(context), child: const Text('No')),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                          _cancelPolicy(policy);
-                        },
-                        style: TextButton.styleFrom(foregroundColor: Colors.red),
-                        child: const Text('Sí, cancelar'),
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Row(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: policy.isParametric ? Colors.green.withOpacity(0.1) : Colors.grey.withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(8),
                       ),
-                    ],
-                  ),
-                );
-              },
+                      child: Icon(
+                        policy.isParametric ? Icons.auto_awesome : Icons.handyman,
+                        color: policy.isParametric ? Colors.green : Colors.grey,
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            '${policy.category} - ${policy.type}',
+                            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            policy.insurer,
+                            style: TextStyle(color: Colors.grey[600], fontSize: 14),
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            policy.description,
+                            style: TextStyle(fontSize: 12, color: Colors.grey[500]),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(
+                          '\$${policy.premium}',
+                          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xFF3B82F6)),
+                        ),
+                        Text(
+                          'USDC/mes',
+                          style: TextStyle(fontSize: 10, color: Colors.grey[500]),
+                        ),
+                        const SizedBox(height: 8),
+                        IconButton(
+                          icon: const Icon(Icons.cancel_outlined),
+                          color: Colors.red,
+                          iconSize: 20,
+                          tooltip: 'Cancelar póliza',
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                                title: const Text('Cancelar Póliza'),
+                                content: Text('¿Deseas cancelar la póliza "${policy.category} - ${policy.type}" de ${policy.insurer}?'),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () => Navigator.pop(context),
+                                    child: const Text('No'),
+                                  ),
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                      _cancelPolicy(policy);
+                                    },
+                                    style: TextButton.styleFrom(foregroundColor: Colors.red),
+                                    child: const Text('Sí, cancelar'),
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
             ),
           );
         },
