@@ -125,7 +125,7 @@ class _SeguroAppState extends State<SeguroApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'RiskQuantum Pro',
+      title: 'Risk0',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
           seedColor: const Color(0xFF2563EB),
@@ -304,7 +304,7 @@ class _OnboardingSurveyState extends State<OnboardingSurvey> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                      'RiskQuantum Pro',
+                      'Risk0',
                       style: TextStyle(
                         fontSize: 28,
                         fontWeight: FontWeight.bold,
@@ -695,7 +695,7 @@ class _TermsAndConditionsScreenState extends State<TermsAndConditionsScreen> {
                     children: [
                       _buildTermsSection(
                         '',
-                        'Bienvenido a RiskQuantum. Al utilizar esta plataforma, usted acepta los presentes Términos y Condiciones.',
+                        'Bienvenido a Risk0. Al utilizar esta plataforma, usted acepta los presentes Términos y Condiciones.',
                       ),
                       const SizedBox(height: 20),
                       _buildTermsSection(
@@ -1257,7 +1257,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'RiskQuantum Pro',
+          'Risk0',
           style: TextStyle(fontWeight: FontWeight.w600, letterSpacing: 1),
         ),
         actions: [
